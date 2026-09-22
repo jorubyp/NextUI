@@ -738,7 +738,7 @@ void loadShaderSettings(int i) {
 			continue;
 		}
 		config.shaderpragmas[i].options[menucount].key = params[j].name;
-		config.shaderpragmas[i].options[menucount].name = params[j].name;
+		config.shaderpragmas[i].options[menucount].name = params[j].label;
 		config.shaderpragmas[i].options[menucount].desc = params[j].name;
 		config.shaderpragmas[i].options[menucount].default_value = params[j].def;
 		
@@ -1748,6 +1748,15 @@ struct Config config = {
 		[SHORTCUT_TOGGLE_TURBO_L2]		= {"Toggle Turbo L2",	-1, BTN_ID_NONE, 0},
 		[SHORTCUT_TOGGLE_TURBO_R]		= {"Toggle Turbo R",	-1, BTN_ID_NONE, 0},
 		[SHORTCUT_TOGGLE_TURBO_R2]		= {"Toggle Turbo R2",	-1, BTN_ID_NONE, 0},
+		// Custom
+		[SHORTCUT_A]					= {"A Shortcut",		-1, BTN_ID_NONE, 0},
+		[SHORTCUT_B]					= {"B Shortcut",		-1, BTN_ID_NONE, 0},
+		[SHORTCUT_X]					= {"X Shortcut",		-1, BTN_ID_NONE, 0},
+		[SHORTCUT_Y]					= {"Y Shortcut",		-1, BTN_ID_NONE, 0},
+		[SHORTCUT_L]					= {"L Shortcut",		-1, BTN_ID_NONE, 0},
+		[SHORTCUT_R]					= {"R Shortcut",		-1, BTN_ID_NONE, 0},
+		[SHORTCUT_SELECT]				= {"Select Shortcut",	-1, BTN_ID_NONE, 0},
+		[SHORTCUT_START]				= {"Start Shortcut",	-1, BTN_ID_NONE, 0},
 		// -----
 		{NULL}
 	},

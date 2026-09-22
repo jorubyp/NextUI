@@ -541,9 +541,9 @@ int PAD_tappedMenu(uint32_t now); // special case, returns 1 on release of BTN_M
 int PAD_tappedSelect(uint32_t now); // special case, returns 1 on release of BTN_SELECT within 250ms if BTN_PLUS/BTN_MINUS haven't been pressed
 
 ///////////////////////////////
-#define VIB_sleepStrength 4
+#define VIB_sleepStrength 1
 #define VIB_sleepDuration_ms 100
-#define VIB_bootStrength 5
+#define VIB_bootStrength 1
 #define VIB_bootDuration_ms 100
 
 void VIB_init(void);
@@ -743,6 +743,7 @@ void PLAT_enableBacklight(int enable);
 int PLAT_supportsDeepSleep(void);
 int PLAT_deepSleep(void);
 void PLAT_powerOff(int reboot);
+void PLAT_applyButton(int btn, int id, int pressed);
 
 void Perf_setCPUMonitorEnabled(int enabled);
 int Perf_isCPUMonitorEnabled(void);

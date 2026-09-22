@@ -137,6 +137,23 @@ void input_poll_callback(void) {
 					break;
 				}
 			}
+			// Custom
+			else if (i>=SHORTCUT_A && i<=SHORTCUT_START) {
+				int pressed = PAD_justPressed(btn);
+				if (pressed || PAD_justReleased(btn)) {
+					switch(i) {
+						case SHORTCUT_A:		PLAT_applyButton(BTN_A, BTN_ID_A, pressed); break;
+						case SHORTCUT_B:		PLAT_applyButton(BTN_B, BTN_ID_B, pressed); break;
+						case SHORTCUT_X:		PLAT_applyButton(BTN_X, BTN_ID_X, pressed); break;
+						case SHORTCUT_Y:		PLAT_applyButton(BTN_Y, BTN_ID_Y, pressed); break;
+						case SHORTCUT_L:		PLAT_applyButton(BTN_L1, BTN_ID_L1, pressed); break;
+						case SHORTCUT_R:		PLAT_applyButton(BTN_R1, BTN_ID_R1, pressed); break;
+						case SHORTCUT_SELECT:	PLAT_applyButton(BTN_SELECT, BTN_ID_SELECT, pressed); break;
+						case SHORTCUT_START:	PLAT_applyButton(BTN_START, BTN_ID_START, pressed); break;
+						default: break;
+					}
+				}
+			}
 			else if (PAD_justPressed(btn)) {
 				switch (i) {
 					case SHORTCUT_SAVE_STATE:

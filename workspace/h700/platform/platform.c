@@ -709,6 +709,11 @@ void PLAT_enableBacklight(int enable) {
 	}
 }
 
+void PLAT_applyButton(int btn, int id, int pressed) {
+	uint32_t tick = SDL_GetTicks();
+	apply_button_state(btn, id, pressed, tick);
+}
+
 void PLAT_powerOff(int reboot) {
 	if (CFG_getHaptics()) {
 		VIB_singlePulse(VIB_bootStrength, VIB_bootDuration_ms);

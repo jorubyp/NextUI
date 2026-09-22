@@ -113,13 +113,11 @@ void MSG_quit(void) {
 
 ///////////////////////////////////////
 
-#define MENU_ITEM_COUNT 5
+#define MENU_ITEM_COUNT 3
 #define MENU_SLOT_COUNT 8
 
 enum {
 	ITEM_CONT,
-	ITEM_SAVE,
-	ITEM_LOAD,
 	ITEM_OPTS,
 	ITEM_QUIT,
 };
@@ -159,10 +157,8 @@ static struct {
 	
 	.items = {
 		[ITEM_CONT] = "Continue",
-		[ITEM_SAVE] = "Save",
-		[ITEM_LOAD] = "Load",
 		[ITEM_OPTS] = "Options",
-		[ITEM_QUIT] = "Quit",
+		[ITEM_QUIT] = "Eject",
 	}
 };
 
@@ -911,7 +907,7 @@ static MenuList options_menu = {
 		{"Frontend", "NextUI (" BUILD_DATE " " BUILD_HASH ")",.on_confirm=OptionFrontend_openMenu},
 		{"Emulator",.on_confirm=OptionEmulator_openMenu},
 		{"Shaders",.on_confirm=OptionShaders_openMenu},
-		{"Cheats",.on_confirm=OptionCheats_openMenu},
+		//{"Cheats",.on_confirm=OptionCheats_openMenu},
 		{"Controls",.on_confirm=OptionControls_openMenu},
 		{"Shortcuts",.on_confirm=OptionShortcuts_openMenu},
 		{"Achievements",.on_confirm=OptionAchievements_openMenu},
@@ -1817,12 +1813,12 @@ void Menu_loop(void) {
 				if (menu.disc<0) menu.disc += menu.total_discs;
 				dirty = 1;
 				sprintf(disc_name, "Disc %i", menu.disc+1);
-			}
+			}/*
 			else if (selected==ITEM_SAVE || selected==ITEM_LOAD) {
 				menu.slot -= 1;
 				if (menu.slot<0) menu.slot += MENU_SLOT_COUNT;
 				dirty = 1;
-			}
+			}*/
 		}
 		else if (PAD_justPressed(BTN_RIGHT)) {
 			if (menu.total_discs>1 && selected==ITEM_CONT) {
@@ -1830,17 +1826,17 @@ void Menu_loop(void) {
 				if (menu.disc==menu.total_discs) menu.disc -= menu.total_discs;
 				dirty = 1;
 				sprintf(disc_name, "Disc %i", menu.disc+1);
-			}
+			}/*
 			else if (selected==ITEM_SAVE || selected==ITEM_LOAD) {
 				menu.slot += 1;
 				if (menu.slot>=MENU_SLOT_COUNT) menu.slot -= MENU_SLOT_COUNT;
 				dirty = 1;
-			}
+			}*/
 		}
-		
+		/*
 		if (dirty && (selected==ITEM_SAVE || selected==ITEM_LOAD)) {
 			Menu_updateState();
-		}
+		}*/
 		
 		if (PAD_justPressed(BTN_B) || PAD_tappedMenu(now)) {
 			status = STATUS_CONT;
@@ -1860,7 +1856,7 @@ void Menu_loop(void) {
 					}
 					show_menu = 0;
 				break;
-				
+				/*
 				case ITEM_SAVE: {
 					Menu_saveState();
 					status = STATUS_SAVE;
@@ -1872,7 +1868,7 @@ void Menu_loop(void) {
 					status = STATUS_LOAD;
 					show_menu = 0;
 				}
-				break;
+				break;*/
 				case ITEM_OPTS: {
 					if (simple_mode) {
 						core.reset();
@@ -1999,7 +1995,7 @@ void Menu_loop(void) {
 			}
 			
 			// slot preview
-			if (selected==ITEM_SAVE || selected==ITEM_LOAD) {
+			/*if (selected==ITEM_SAVE || selected==ITEM_LOAD) {
 				#define WINDOW_RADIUS 4 // TODO: this logic belongs in blitRect?
 				#define PAGINATION_HEIGHT 6
 				// unscaled
@@ -2044,7 +2040,7 @@ void Menu_loop(void) {
 					if (i==menu.slot)GFX_blitAsset(ASSET_PAGE, NULL, screen, &(SDL_Rect){ox+SCALE1(i*15),oy});
 					else GFX_blitAsset(ASSET_DOT, NULL, screen, &(SDL_Rect){ox+SCALE1(i*15)+4,oy+SCALE1(2)});
 				}
-			}
+			}*/
 			GFX_flip(screen);
 			dirty=0;
 		} else {

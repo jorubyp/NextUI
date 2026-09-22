@@ -91,7 +91,11 @@ int OptionFrontend_openMenu(MenuList* list, int i) {
 			item->value = option->value;
 		}
 	}
-	Menu_options(&OptionFrontend_menu);
+	int cont = Menu_options(&OptionFrontend_menu);
+	if (cont) {
+		show_menu = 0;
+		return MENU_CALLBACK_EXIT;
+	}
 	return MENU_CALLBACK_NOP;
 }
 
@@ -207,7 +211,11 @@ int OptionEmulator_openMenu(MenuList* list, int index) {
 	}
 
 	if (cat_count || config.core.enabled_count) {
-		Menu_options(&OptionEmulator_menu);
+		int cont = Menu_options(&OptionEmulator_menu);
+		if (cont) {
+			show_menu = 0;
+			return MENU_CALLBACK_EXIT;
+		}
 		free(OptionEmulator_menu.items);
 		free(config.core.enabled_options);
 		OptionEmulator_menu.items = NULL;
@@ -342,7 +350,11 @@ int OptionControls_openMenu(MenuList* list, int i) {
 			if (button->mod) item->value += LOCAL_BUTTON_COUNT;
 		}
 	}
-	Menu_options(&OptionControls_menu);
+	int cont = Menu_options(&OptionControls_menu);
+	if (cont) {
+		show_menu = 0;
+		return MENU_CALLBACK_EXIT;
+	}
 	return MENU_CALLBACK_NOP;
 }
 
@@ -423,7 +435,11 @@ int OptionShortcuts_openMenu(MenuList* list, int i) {
 			if (button->mod) item->value += LOCAL_BUTTON_COUNT;
 		}
 	}
-	Menu_options(&OptionShortcuts_menu);
+	int cont = Menu_options(&OptionShortcuts_menu);
+	if (cont) {
+		show_menu = 0;
+		return MENU_CALLBACK_EXIT;
+	}
 	return MENU_CALLBACK_NOP;
 }
 
@@ -464,7 +480,11 @@ static MenuList OptionSaveChanges_menu = {
 int OptionSaveChanges_openMenu(MenuList* list, int i) {
 	OptionSaveChanges_updateDesc();
 	OptionSaveChanges_menu.desc = getSaveDesc();
-	Menu_options(&OptionSaveChanges_menu);
+	int cont = Menu_options(&OptionSaveChanges_menu);
+	if (cont) {
+		show_menu = 0;
+		return MENU_CALLBACK_EXIT;
+	}
 	return MENU_CALLBACK_NOP;
 }
 
@@ -541,7 +561,11 @@ int OptionCheats_openMenu(MenuList* list, int i) {
 	}
 
 	if (OptionCheats_menu.items[0].name) {
-		Menu_options(&OptionCheats_menu);
+		int cont = Menu_options(&OptionCheats_menu);
+		if (cont) {
+			show_menu = 0;
+			return MENU_CALLBACK_EXIT;
+		}
 	}
 	else {
 		// we expect at most CHEAT_MAX_PATHS paths with MAX_PATH length, just hardcode it here
@@ -644,7 +668,11 @@ static int OptionPragmas_openMenu(MenuList* list, int i) {
 	}
 
 	if (PragmasOptions_menu.items[0].name) {
-		Menu_options(&PragmasOptions_menu);
+		int cont = Menu_options(&PragmasOptions_menu);
+		if (cont) {
+			show_menu = 0;
+			return MENU_CALLBACK_EXIT;
+		}
 	} else {
 		Menu_message("No extra settings found", (char*[]){"B", "BACK", NULL});
 	}
@@ -719,7 +747,11 @@ int OptionShaders_openMenu(MenuList* list, int i) {
 
 
 	if (ShaderOptions_menu.items[0].name) {
-		Menu_options(&ShaderOptions_menu);
+		int cont = Menu_options(&ShaderOptions_menu);
+		if (cont) {
+			show_menu = 0;
+			return MENU_CALLBACK_EXIT;
+		}
 	} else {
 		Menu_message("No shaders available\n/Shaders folder or shader files not found", (char*[]){"B", "BACK", NULL});
 	}

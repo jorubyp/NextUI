@@ -344,7 +344,11 @@ static int OptionAchievements_showDetail(MenuList* list, int i) {
 		PAD_poll();
 		
 		// Check for input
-		if (PAD_justPressed(BTN_B)) {
+		uint32_t now = SDL_GetTicks();
+		if (PAD_tappedMenu(now)) {
+			show_detail = 0;
+			show_menu = 0;
+		} else if (PAD_justPressed(BTN_B)) {
 			show_detail = 0;
 		} else if (PAD_justPressed(BTN_X)) {
 			// Toggle mute for this achievement
@@ -685,8 +689,8 @@ static int OptionAchievements_openMenu(MenuList* list, int i) {
 				start = selected;
 			}
 			dirty = 1;
-		} else if (PAD_justPressed(BTN_B)) {
-			show_menu = 0;
+		} else if (PAD_justPressed(BTN_B) || PAD_justPressed(BTN_MENU)) {
+			return 1;
 		} else if (PAD_justPressed(BTN_A)) {
 			// Show detail view (returns updated index after navigation)
 			selected = OptionAchievements_showDetail(NULL, selected);
@@ -1108,7 +1112,10 @@ int Menu_options(MenuList* list) {
 			}
 		}
 		
-		// uint32_t now = SDL_GetTicks();
+		uint32_t now = SDL_GetTicks();
+		if (PAD_tappedMenu(now)) {
+			return 1;
+		}
 		if (PAD_justPressed(BTN_B)) { // || PAD_tappedMenu(now)
 			show_options = 0;
 		}
@@ -1782,6 +1789,7 @@ void Menu_loop(void) {
 	int dirty = 1;
 	int ignore_menu = 0;
 	int menu_start = 0;
+	int cont = 0;
 	SDL_Surface* preview = SDL_CreateRGBSurface(SDL_SWSURFACE,DEVICE_WIDTH/2,DEVICE_HEIGHT/2,32,RGBA_MASK_8888); // TODO: retain until changed?
 
 	//set vid.blit to null for menu drawing no need for blitrender drawing
@@ -1834,9 +1842,10 @@ void Menu_loop(void) {
 			Menu_updateState();
 		}
 		
-		if (PAD_justPressed(BTN_B) || (BTN_WAKE!=BTN_MENU && PAD_tappedMenu(now))) {
+		if (PAD_justPressed(BTN_B) || PAD_tappedMenu(now)) {
 			status = STATUS_CONT;
 			show_menu = 0;
+			break;
 		}
 		else if (PAD_justPressed(BTN_A)) {
 			switch(selected) {
@@ -1873,7 +1882,14 @@ void Menu_loop(void) {
 					else {
 						int old_scaling = screen_scaling;
 						Options_updateVisibility();
-						Menu_options(&options_menu);
+						cont = Menu_options(&options_menu);
+						if (cont) {
+							status = STATUS_CONT;
+							show_menu = 0;
+							show_setting = 0;
+							dirty = false;
+							break;
+						}
 						if (screen_scaling!=old_scaling) {
 							selectScaler(renderer.true_w,renderer.true_h,renderer.src_p);
 						

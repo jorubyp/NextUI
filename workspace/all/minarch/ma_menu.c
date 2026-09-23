@@ -222,6 +222,10 @@ void Menu_beforeSleep() {
 	RTC_write();
 	State_autosave();
 	putFile(AUTO_RESUME_PATH, game.path + strlen(SDCARD_PATH));
+	if (!show_menu) {
+		core.reset();
+		GFX_animateSurfaceOpacity(screen,0,0,screen->w,screen->h,255,0,0,LAYER_ALL);
+	}
 }
 void Menu_afterSleep() {
 	unlink(AUTO_RESUME_PATH);
